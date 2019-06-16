@@ -8,14 +8,15 @@
 //% weight=10 color=#800000 icon="\uf017" block="rx8035"
 namespace rx8035 {
     let I2C_ADDR = 0x32
-    let REG_CTRL = 0x0f
+    let REG_CTRL1 = 0xe0
+    let REG_CTRL2 = 0xf0
     let REG_SECOND = 0x00
-    let REG_MINUTE = 0x01
-    let REG_HOUR = 0x02
-    let REG_WEEKDAY = 0x03
-    let REG_DAY = 0x04
-    let REG_MONTH = 0x05
-    let REG_YEAR = 0x06
+    let REG_MINUTE = 0x10
+    let REG_HOUR = 0x20
+    let REG_WEEKDAY = 0x30
+    let REG_DAY = 0x40
+    let REG_MONTH = 0x50
+    let REG_YEAR = 0x60
 
     /**
      * set reg
@@ -188,7 +189,7 @@ namespace rx8035 {
     //% blockId="isXstp" block="test Xstp"
     //% weight=86 blockGap=8
     export function isXstp(): boolean {
-        if ((getReg(REG_CTRL) & 0x20) != 0) return true;
+        if ((getReg(REG_CTRL2) & 0x20) != 0) return true;
         else return false;
     }
 
@@ -197,8 +198,9 @@ namespace rx8035 {
      */
     //% blockId="resetXstp" block="reset Xstp"
     //% weight=85 blockGap=8
-    export function reseXstp(): void {
-        setReg(REG_CTRL, 0x00)
+    export function resetXstp(): void {
+        setReg(REG_CTRL1, 0x00)
+        setReg(REG_CTRL2, 0x00)
     }
 
     /**
@@ -225,6 +227,7 @@ namespace rx8035 {
         buf[6] = DecToHex(month);
         buf[7] = DecToHex(year);
         pins.i2cWriteBuffer(I2C_ADDR, buf)
+        resetXstp()
     }
     /**
      * set RTC
