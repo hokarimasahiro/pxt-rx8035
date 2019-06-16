@@ -8,22 +8,22 @@
 //% weight=10 color=#800000 icon="\uf017" block="rx8035"
 namespace rx8035 {
     let I2C_ADDR = 0x32
-    let REG_CTRL1 = 0xe0
-    let REG_CTRL2 = 0xf0
+    let REG_CTRL1 = 0x0e
+    let REG_CTRL2 = 0x0f
     let REG_SECOND = 0x00
-    let REG_MINUTE = 0x10
-    let REG_HOUR = 0x20
-    let REG_WEEKDAY = 0x30
-    let REG_DAY = 0x40
-    let REG_MONTH = 0x50
-    let REG_YEAR = 0x60
+    let REG_MINUTE = 0x01
+    let REG_HOUR = 0x02
+    let REG_WEEKDAY = 0x03
+    let REG_DAY = 0x04
+    let REG_MONTH = 0x05
+    let REG_YEAR = 0x06
 
     /**
      * set reg
      */
     function setReg(reg: number, dat: number): void {
         let buf = pins.createBuffer(2);
-        buf[0] = reg;
+        buf[0] = reg << 4 | 0x00;
         buf[1] = dat;
         pins.i2cWriteBuffer(I2C_ADDR, buf);
     }
@@ -32,7 +32,7 @@ namespace rx8035 {
      * get reg
      */
     function getReg(reg: number): number {
-        pins.i2cWriteNumber(I2C_ADDR, reg, NumberFormat.UInt8BE);
+        pins.i2cWriteNumber(I2C_ADDR, reg << 4 | 0x04, NumberFormat.UInt8BE);
         return pins.i2cReadNumber(I2C_ADDR, NumberFormat.UInt8BE);
     }
 
@@ -218,7 +218,7 @@ namespace rx8035 {
     //% blockId="setDateTime" block="set year %year|month %month|day %day|weekday %weekday|hour %hour|minute %minute|second %second"
     export function DateTime(year: number, month: number, day: number, weekday: number, hour: number, minute: number, second: number): void {
         let buf = pins.createBuffer(8);
-        buf[0] = REG_SECOND;
+        buf[0] = REG_SECOND << 4 | 0x00;
         buf[1] = DecToHex(second);
         buf[2] = DecToHex(minute);
         buf[3] = DecToHex(hour) | 0x80;		// 24H mode
