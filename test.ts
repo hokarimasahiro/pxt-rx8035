@@ -6,7 +6,7 @@ basic.forever(function () {
     for (let i = 0; i <= 0x0F; i++) {
         basic.clearScreen()
         basic.pause(500)
-        basic.showNumber(rx8035.getRTC(i))
+        basic.showNumber(rx8035.getRTC(i << 4 | 0x04))
         basic.pause(500)
     }
     basic.clearScreen()

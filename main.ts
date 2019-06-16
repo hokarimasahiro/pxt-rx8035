@@ -222,7 +222,7 @@ namespace rx8035 {
         buf[1] = DecToHex(second);
         buf[2] = DecToHex(minute);
         buf[3] = DecToHex(hour) | 0x80;		// 24H mode
-        buf[4] = DecToHex(weekday);			// External Battery Backup Supply (VBAT) Enable bit
+        buf[4] = DecToHex(weekday);
         buf[5] = DecToHex(day);
         buf[6] = DecToHex(month);
         buf[7] = DecToHex(year);
