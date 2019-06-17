@@ -253,16 +253,33 @@ namespace rx8035 {
         return pins.i2cReadNumber(I2C_ADDR, NumberFormat.UInt8BE);
     }
     /**
-     * get RTC DATA
+     * get RTC RAW DATA
      */
-    //% blockId="getData" block="get RTC data"
+    //% blockId="getRawData" block="get RTC RAW data"
     //% weight=46 blockGap=8
-    export function getData(): number[] {
+    export function getRawData(): number[] {
         let retbuf = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         let buf = pins.i2cReadBuffer(I2C_ADDR, 16);
         for (let i = 0; i < 16; i++) {
             retbuf[i] = buf[i]
         }
+        return retbuf;
+    }
+    /**
+     * get RTC DATA
+     */
+    //% blockId="getData" block="get RTC data"
+    //% weight=46 blockGap=8
+    export function getData(): number[] {
+        let retbuf = [0, 0, 0, 0, 0, 0, 0]
+        let buf = getRawData();
+        retbuf[0] = HexToDec(buf[7])    // year
+        retbuf[1] = HexToDec(buf[6])    // month
+        retbuf[2] = HexToDec(buf[5])    // day
+        retbuf[3] = HexToDec(buf[4])    // weekday
+        retbuf[4] = HexToDec(buf[3])    // hour
+        retbuf[5] = HexToDec(buf[2])    // minute
+        retbuf[6] = HexToDec(buf[1])    // second
         return retbuf;
     }
 }
