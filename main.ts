@@ -273,13 +273,13 @@ namespace rx8035 {
     export function getData(): number[] {
         let retbuf = [0, 0, 0, 0, 0, 0, 0]
         let buf = getRawData();
-        retbuf[0] = HexToDec(buf[7])    // year
-        retbuf[1] = HexToDec(buf[6])    // month
-        retbuf[2] = HexToDec(buf[5])    // day
-        retbuf[3] = HexToDec(buf[4])    // weekday
-        retbuf[4] = HexToDec(buf[3])    // hour
-        retbuf[5] = HexToDec(buf[2])    // minute
-        retbuf[6] = HexToDec(buf[1])    // second
+        retbuf[0] = HexToDec(buf[7]) % 100  // year
+        retbuf[1] = HexToDec(buf[6])        // month
+        retbuf[2] = HexToDec(buf[5])        // day
+        retbuf[3] = HexToDec(buf[4])        // weekday
+        retbuf[4] = HexToDec(buf[3]) | 0x80 // hour
+        retbuf[5] = HexToDec(buf[2])        // minute
+        retbuf[6] = HexToDec(buf[1])        // second
         return retbuf;
     }
 }
