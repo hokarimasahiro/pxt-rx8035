@@ -253,11 +253,10 @@ namespace rx8035 {
         return pins.i2cReadNumber(I2C_ADDR, NumberFormat.UInt8BE);
     }
     /**
-     * get RTC
-     * @param ad address of RTC, eg: 0
+     * get RTC DATA
      */
-    //% blockId="getRTC" block="get RTC address=%ad"
-    //% weight=48 blockGap=8
+    //% blockId="getData" block="get RTC data"
+    //% weight=46 blockGap=8
     export function getData(): number[] {
         let retbuf = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         let buf = pins.i2cReadBuffer(I2C_ADDR, 16);
