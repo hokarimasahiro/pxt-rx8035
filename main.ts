@@ -74,6 +74,7 @@ namespace rx8035 {
         buf[6] = DecToHex(month);
         buf[7] = DecToHex(year);
         pins.i2cWriteBuffer(I2C_ADDR, buf)
+        setReg(REG_CTRL2,0x00)
     }
     /**
      * get RTC DATA
