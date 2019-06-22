@@ -106,4 +106,12 @@ namespace rx8035 {
         }
         return retbuf;
     }
+    /**
+     * Clear VDET
+     */
+    //% blockId="clearVdet" block="clear VDET"
+    //% weight=44 blockGap=8
+    export function clearVdet(): void {
+        setReg(REG_CTRL2, 0x00)
+    }
 }
